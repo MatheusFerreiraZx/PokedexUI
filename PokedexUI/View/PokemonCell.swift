@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PokemonCell: View {
     
@@ -40,8 +41,8 @@ struct PokemonCell: View {
                         )
                         .frame(width: 100, height: 24)
 
-                    
-                    Image("pokemon")
+                                                        
+                        KFImage(result.imageUrl)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 68, height: 68)
