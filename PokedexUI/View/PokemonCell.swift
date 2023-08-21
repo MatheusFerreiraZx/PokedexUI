@@ -6,18 +6,16 @@
 //
 
 import SwiftUI
-import Kingfisher
 
 struct PokemonCell: View {
     
     let pokemon: PokemonModel
     let viewModel: PokemonViewModel
-    let backgroundColor: Color
+    @State private var image: UIImage?
     
     init(pokemon: PokemonModel, viewModel: PokemonViewModel) {
         self.pokemon = pokemon
         self.viewModel = viewModel
-        self.backgroundColor = Color(viewModel.backgroundColor(forType: pokemon.type))
     }
     
     var body: some View {
@@ -40,18 +38,41 @@ struct PokemonCell: View {
                                 .fill(Color.white.opacity(0.25))
                         )
                         .frame(width: 100, height: 24)
-
-                                                        
-                        KFImage(result.imageUrl)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 68, height: 68)
-                        .padding([.bottom, .trailing], 4)
+                    
+                    
+                    if let image = image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 68, height: 68)
+                            .padding([.bottom, .trailing], 4)
+                    } else {
+                        Image(systemName: "questionmark.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 68, height: 68)
+                            .padding([.bottom, .trailing], 4)
+                            .onAppear {
+                                loadImage()
+                            }
+                    }
                 }
             }
         }
-        .background(backgroundColor)
+        .background(Color(viewModel.backgroundColor(forType: pokemon.type)))
         .cornerRadius(12)
-        .shadow(color: backgroundColor, radius: 6, x: 0.0, y: 0.0)
+        .shadow(color: Color(viewModel.backgroundColor(forType: pokemon.type)), radius: 6, x: 0.0, y: 0.0)
+    }
+    
+    private func loadImage() {
+        guard let imageUrl = URL(string: pokemon.imageUrl) else { return }
+        
+        URLSession.shared.dataTask(with: imageUrl) { data, _, error in
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.image = image
+                }
+            }
+        }.resume()
     }
 }

@@ -28,7 +28,6 @@ class PokemonViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.pokemonModel = pokemon
             }
-            
         }.resume()
     }
        
@@ -46,7 +45,6 @@ class PokemonViewModel: ObservableObject {
            default: return  .systemIndigo
            }
        }
-       
    }
 
    extension Data {
@@ -57,5 +55,4 @@ class PokemonViewModel: ObservableObject {
            guard let data = parseDataString?.data(using: .utf8) else { return nil}
            return data
        }
-       
    }

@@ -23,6 +23,7 @@ struct PokedexView: View {
                 }
             }
             .navigationTitle("Pokedex")
+            .padding(10)
         }
     }
 }
