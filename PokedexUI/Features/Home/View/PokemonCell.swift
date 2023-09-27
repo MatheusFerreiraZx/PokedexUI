@@ -25,6 +25,13 @@ struct PokemonCell: View {
                 .padding(.horizontal, 10)
                 
                 avatar()
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 68, height: 68)
+                    .padding([.bottom, .trailing], 4)
+                    .onAppear {
+                        loadImage()
+                    }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -51,27 +58,16 @@ struct PokemonCell: View {
             )
     }
     
-    @ViewBuilder
-    func avatar() -> some View {
+    func avatar() -> Image {
         if let image = image {
             Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 68, height: 68)
-                .padding([.bottom, .trailing], 4)
         } else {
             Image(systemName: "questionmark.circle")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 68, height: 68)
-                .padding([.bottom, .trailing], 4)
-                .onAppear {
-                    loadImage()
-                }
         }
     }
         
     private func loadImage() {
+        guard image == nil else { return }
         guard let imageUrl = URL(string: pokemon.imageUrl) else { return }
         
         URLSession.shared.dataTask(with: imageUrl) { data, _, error in
