@@ -21,8 +21,8 @@ struct HomeView: View {
                     }
                 }
             }
+            .ignoresSafeArea(.all, edges: .bottom)
             .navigationTitle("Pokedex")
-            .padding(10)
         }
         .onAppear {
             viewModel.fetchPokemons()
