@@ -21,6 +21,7 @@ struct HomeView: View {
                     }
                 }
             }
+            .padding(.horizontal, 8)
             .ignoresSafeArea(.all, edges: .bottom)
             .navigationTitle("Pokedex")
         }
