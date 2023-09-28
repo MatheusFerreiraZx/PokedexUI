@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import Kingfisher
 struct PokemonCell: View {
     
     let pokemon: PokemonModel
@@ -24,14 +24,16 @@ struct PokemonCell: View {
                 .padding(.top, 10)
                 .padding(.horizontal, 10)
                 
-                avatar()
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 68, height: 68)
-                    .padding([.bottom, .trailing], 4)
-                    .onAppear {
-                        loadImage()
-                    }
+                if let url = URL(string: pokemon.imageUrl) {
+                    KFImage(url)
+                        .placeholder {
+                            ProgressView()
+                        }
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 130, height: 150)
+                        .padding(10)
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -56,14 +58,6 @@ struct PokemonCell: View {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.white.opacity(0.25))
             )
-    }
-    
-    func avatar() -> Image {
-        if let image = image {
-            Image(uiImage: image)
-        } else {
-            Image(systemName: "questionmark.circle")
-        }
     }
         
     private func loadImage() {
