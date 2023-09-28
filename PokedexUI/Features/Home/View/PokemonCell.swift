@@ -59,19 +59,6 @@ struct PokemonCell: View {
                     .fill(Color.white.opacity(0.25))
             )
     }
-        
-    private func loadImage() {
-        guard image == nil else { return }
-        guard let imageUrl = URL(string: pokemon.imageUrl) else { return }
-        
-        URLSession.shared.dataTask(with: imageUrl) { data, _, error in
-            if let data = data, let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self.image = image
-                }
-            }
-        }.resume()
-    }
 }
 
 #Preview {
