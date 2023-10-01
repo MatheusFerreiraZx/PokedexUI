@@ -10,6 +10,8 @@ import SwiftUI
 class homeViewModel: ObservableObject {
     
     @Published var pokemonModel = [PokemonModel]()
+    @Published var searchText: String = ""
+    
     let baseUrl = "https://pokedex-bb36f.firebaseio.com/pokemon.json"
     
     
