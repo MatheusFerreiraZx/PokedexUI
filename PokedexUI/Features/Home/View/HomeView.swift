@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var viewModel = homeViewModel()
+    @AppStorage("isDarkMode") var isDarkMode: Bool = false
     
     private let gridItems = [GridItem(.flexible()), GridItem(.flexible())]
 
@@ -23,17 +24,30 @@ struct HomeView: View {
             }
             .padding(.horizontal, 8)
             .ignoresSafeArea(.all, edges: .bottom)
-            .navigationTitle("Pokedex")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: HStack {
+            .navigationBarItems(leading:
+                                    HStack {
+                Image("Pokeballs")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                Text("Pokedex")
+                    .font(Font.system(size: 26))
+            }, trailing: HStack {
+                Button(action: {
+                                        isDarkMode.toggle()
+                }) {
+                    Image(systemName: isDarkMode ? "moon.circle.fill" : "sun.max.fill")
+                        .font(.title)
+                }
                 Spacer()
-                .searchable(text: $viewModel.searchText)
+                    .searchable(text: $viewModel.searchText)
             })
-        }
-        .onAppear {
-            viewModel.fetchPokemons()
-        }
-    }
+                    }
+                    .onAppear {
+                        viewModel.fetchPokemons()
+                    }
+                    .preferredColorScheme(isDarkMode ? .dark : .light)
+                }
 
     private var filteredPokemon: [PokemonModel] {
         return viewModel.searchText.isEmpty
