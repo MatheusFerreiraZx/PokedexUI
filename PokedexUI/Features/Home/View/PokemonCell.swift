@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+
 struct PokemonCell: View {
     
     let pokemon: PokemonModel
