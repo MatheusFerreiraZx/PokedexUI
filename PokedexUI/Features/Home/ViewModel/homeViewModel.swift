@@ -14,7 +14,6 @@ class homeViewModel: ObservableObject {
     
     let baseUrl = "https://pokedex-bb36f.firebaseio.com/pokemon.json"
     
-    
     func fetchPokemons() {
         guard let url = URL(string: baseUrl) else { return }
         
