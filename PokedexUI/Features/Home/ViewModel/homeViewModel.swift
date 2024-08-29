@@ -5,7 +5,7 @@
 //  Created by Matheus Ferreira on 19/08/23.
 //
 
-import SwiftUI
+import Foundation
 
 class homeViewModel: ObservableObject {
     

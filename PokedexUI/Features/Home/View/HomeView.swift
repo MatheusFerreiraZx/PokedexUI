@@ -12,7 +12,7 @@ struct HomeView: View {
     @AppStorage("isDarkMode") var isDarkMode: Bool = false
     
     private let gridItems = [GridItem(.flexible()), GridItem(.flexible())]
-
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -34,7 +34,7 @@ struct HomeView: View {
                     .font(Font.system(size: 26))
             }, trailing: HStack {
                 Button(action: {
-                                        isDarkMode.toggle()
+                    isDarkMode.toggle()
                 }) {
                     Image(systemName: isDarkMode ? "moon.circle.fill" : "sun.max.fill")
                         .font(.title)
@@ -42,19 +42,26 @@ struct HomeView: View {
                 Spacer()
                     .searchable(text: $viewModel.searchText)
             })
-                    }
-                    .onAppear {
-                        viewModel.fetchPokemons()
-                    }
-                    .preferredColorScheme(isDarkMode ? .dark : .light)
-                }
-
+        }
+        .onAppear {
+            viewModel.fetchPokemons()
+        }
+        .preferredColorScheme(isDarkMode ? .dark : .light)
+    }
+    
     private var filteredPokemon: [PokemonModel] {
-        return viewModel.searchText.isEmpty
-            ? viewModel.pokemonModel
-            : viewModel.pokemonModel.filter { $0.name.lowercased().contains(viewModel.searchText.lowercased()) }
+        if viewModel.searchText.isEmpty {
+            return viewModel.pokemonModel
+        } else {
+            let searchTextLowercased = viewModel.searchText.lowercased()
+            return viewModel.pokemonModel.filter { pokemon in
+                let formattedId = String(format: "%03d", pokemon.id)
+                return pokemon.name.lowercased().contains(searchTextLowercased) ||
+                formattedId.contains(searchTextLowercased)
+            }
         }
     }
+}
 
 #Preview {
     HomeView(viewModel: homeViewModel())
