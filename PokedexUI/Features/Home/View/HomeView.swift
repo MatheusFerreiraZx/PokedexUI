@@ -27,7 +27,7 @@ struct HomeView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading:
                                     HStack {
-                Image("Pokeball")
+                Image(.pokeball)
                     .resizable()
                     .frame(width: 40, height: 40)
                 Text("Pokedex")

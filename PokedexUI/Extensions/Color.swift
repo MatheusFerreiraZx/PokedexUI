@@ -8,8 +8,7 @@
 import SwiftUI
 
 extension Color {
-    
-    /// you can call access globaly
+
     static func pokemon(type: PokemonModel.PokemonType) -> Color {
         switch type {
             case .fire: return Color(.systemRed)

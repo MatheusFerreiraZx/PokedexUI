@@ -17,6 +17,7 @@ struct PokemonModel: Codable, Identifiable {
     let name: String
     let imageUrl: String
     private let type: String
+    
     var pokemonType: PokemonType {
         return PokemonType(rawValue: type) ?? .none
     }
